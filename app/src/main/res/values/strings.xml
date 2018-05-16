@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">PagerSocket</string>
+    <string name="languages">Languages</string>
+    <string name="tags">Skills</string>
+    <string name="status">Status</string>
+    <string name="status_update">Update status</string>
+    <string name="no_status"><i>No available</i></string>
+    <string name="status_update_error">An error occurred while updating the state</string>
+    <string name="cancel">Cancel</string>
+    <string name="apply">Apply</string>
+    <string name="edit">Edit</string>
+    <string name="avatar">Avatar</string>
+    <string name="team_mate">Team mate</string>
+</resources>

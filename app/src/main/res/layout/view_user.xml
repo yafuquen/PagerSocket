@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.yafuquen.pagersocket.view.ui.widget.UserView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/user_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp">
+
+    <ImageView
+        android:id="@+id/user_avatar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:contentDescription="@string/avatar"
+        tools:src="@mipmap/ic_launcher_round" />
+
+    <TextView
+        android:id="@+id/user_name"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@id/user_avatar"
+        android:layout_toRightOf="@id/user_avatar"
+        tools:text="Name" />
+
+    <TextView
+        android:id="@+id/user_role"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/user_name"
+        android:layout_alignStart="@id/user_name"
+        android:layout_below="@id/user_name"
+        tools:text="Role" />
+
+    <TextView
+        android:id="@+id/user_github"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/user_name"
+        android:layout_alignStart="@id/user_name"
+        android:layout_below="@id/user_role"
+        android:drawableLeft="@drawable/ic_github"
+        android:drawablePadding="4dp"
+        android:drawableStart="@drawable/ic_github"
+        tools:text="github" />
+
+    <TextView
+        android:id="@+id/user_location"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/user_name"
+        android:layout_alignStart="@id/user_name"
+        android:layout_below="@id/user_github"
+        android:drawableLeft="@drawable/ic_location"
+        android:drawablePadding="4dp"
+        android:drawableStart="@drawable/ic_location"
+        tools:text="location" />
+
+    <TextView
+        android:id="@+id/user_languages_title"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_location"
+        android:text="@string/languages" />
+
+    <TextView
+        android:id="@+id/user_languages"
+        style="@style/Base.TextAppearance.AppCompat.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_languages_title"
+        tools:text="English, Spanish" />
+
+    <TextView
+        android:id="@+id/user_tags_title"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_languages"
+        android:text="@string/tags" />
+
+    <TextView
+        android:id="@+id/user_tags"
+        style="@style/Base.TextAppearance.AppCompat.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_tags_title"
+        tools:text="Java, Kotlin, Swift" />
+</com.yafuquen.pagersocket.view.ui.widget.UserView>
