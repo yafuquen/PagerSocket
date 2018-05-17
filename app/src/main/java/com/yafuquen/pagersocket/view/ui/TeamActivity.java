@@ -70,7 +70,7 @@ public class TeamActivity extends BaseActivity implements TeamPresenter.View {
     }
 
     @Override
-    protected void initializeInjector() {
+    protected void inject() {
         TeamComponent teamComponent = getApplicationComponent().teamComponent(new TeamModule());
         teamComponent.inject(this);
     }

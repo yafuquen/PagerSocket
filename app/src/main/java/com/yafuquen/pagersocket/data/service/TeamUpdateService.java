@@ -6,5 +6,5 @@ public interface TeamUpdateService {
 
     Observable<String> receiveEvents();
 
-    Observable<Void> updateStatus(String statusMessage);
+    Observable<Void> updateState(String stateMessage);
 }

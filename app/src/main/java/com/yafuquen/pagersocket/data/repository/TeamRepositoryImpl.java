@@ -49,8 +49,8 @@ public class TeamRepositoryImpl implements TeamRepository {
     }
 
     @Override
-    public Observable<Void> updateStatus(String username, String newStatus) {
-        return teamUpdateService.updateStatus(eventMapper.buildMessage(username, newStatus));
+    public Observable<Void> updateState(String username, String newState) {
+        return teamUpdateService.updateState(eventMapper.buildMessage(username, newState));
     }
 
     @Override

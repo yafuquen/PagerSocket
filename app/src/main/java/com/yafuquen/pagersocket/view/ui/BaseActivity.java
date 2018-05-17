@@ -12,7 +12,7 @@ abstract class BaseActivity extends AppCompatActivity implements Presenter.View 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initializeInjector();
+        inject();
     }
 
     ApplicationComponent getApplicationComponent() {
@@ -28,5 +28,5 @@ abstract class BaseActivity extends AppCompatActivity implements Presenter.View 
         return (Application) getApplication();
     }
 
-    protected abstract void initializeInjector();
+    protected abstract void inject();
 }

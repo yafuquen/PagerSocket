@@ -27,26 +27,26 @@ import butterknife.OnClick;
 
 public class UserActivity extends BaseActivity implements UserPresenter.View {
 
-    private static final String EDITING_STATUS = "editingStatus";
+    private static final String EDITING_STATE = "editingState";
 
     private static final String USER = "user";
 
     @BindView(R.id.user_layout)
     UserView userView;
 
-    @BindView(R.id.user_status)
-    TextView status;
+    @BindView(R.id.user_state)
+    TextView stateText;
 
-    @BindView(R.id.user_status_edit)
-    EditText statusEdit;
+    @BindView(R.id.user_state_edit)
+    EditText stateEdit;
 
-    @BindView(R.id.status_edit_layout)
+    @BindView(R.id.state_edit_layout)
     View editLayout;
 
-    @BindView(R.id.status_save_layout)
+    @BindView(R.id.state_save_layout)
     View saveLayout;
 
-    @BindView(R.id.user_status_edit_action)
+    @BindView(R.id.user_state_edit_action)
     ImageButton editButton;
 
     @Inject
@@ -57,19 +57,19 @@ public class UserActivity extends BaseActivity implements UserPresenter.View {
 
     private boolean editing;
 
-    @OnClick(R.id.user_status_edit_action)
-    void editStatus() {
-        showApplyStatus();
+    @OnClick(R.id.user_state_edit_action)
+    void editState() {
+        showApplyState();
     }
 
-    @OnClick(R.id.user_status_cancel_action)
-    void cancelEditStatus() {
-        showEditStatus();
+    @OnClick(R.id.user_state_cancel_action)
+    void cancelEditState() {
+        showEditState();
     }
 
-    @OnClick(R.id.user_status_apply_action)
-    void applyEditStatus() {
-        saveStatus();
+    @OnClick(R.id.user_state_apply_action)
+    void applyEditState() {
+        saveState();
     }
 
     @Override
@@ -101,7 +101,7 @@ public class UserActivity extends BaseActivity implements UserPresenter.View {
     }
 
     @Override
-    protected void initializeInjector() {
+    protected void inject() {
         TeamComponent teamComponent = getApplicationComponent().teamComponent(new TeamModule());
         teamComponent.inject(this);
     }
@@ -109,7 +109,7 @@ public class UserActivity extends BaseActivity implements UserPresenter.View {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(EDITING_STATUS, editing);
+        outState.putBoolean(EDITING_STATE, editing);
     }
 
     @Override
@@ -118,46 +118,13 @@ public class UserActivity extends BaseActivity implements UserPresenter.View {
         return true;
     }
 
-    private void setupView() {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        userView.bindTo(userPresenter.getUser(), picasso);
-        showState(userPresenter.getUser().getStatus());
-        if (getIntent().getBooleanExtra(EDITING_STATUS, false)) {
-            showApplyStatus();
-        } else {
-            showEditStatus();
-        }
-    }
-
-    private void saveStatus() {
-        String status = statusEdit.getText().toString();
-        if (!TextUtils.isEmpty(status)) {
-            userPresenter.updateStatus(status);
-        }
-    }
-
-    private void showApplyStatus() {
-        editing = true;
-        editLayout.setVisibility(View.GONE);
-        saveLayout.setVisibility(View.VISIBLE);
-        statusEdit.requestFocus();
-        statusEdit.setSelection(statusEdit.getText().length());
-    }
-
-    private void showEditStatus() {
-        editing = false;
-        saveLayout.setVisibility(View.GONE);
-        editLayout.setVisibility(View.VISIBLE);
+    @Override
+    public void stateUpdateError() {
+        Toast.makeText(this, R.string.state_update_error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void statusUpdateError() {
-        Toast.makeText(this, R.string.status_update_error, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void statusUpdated() {
+    public void stateUpdated() {
         editing = false;
         finish();
     }
@@ -168,16 +135,16 @@ public class UserActivity extends BaseActivity implements UserPresenter.View {
             return;
         }
         if (!TextUtils.isEmpty(state)) {
-            status.setText(EmojiCompat.get().process(state));
-            statusEdit.setText(EmojiCompat.get().process(state));
+            stateText.setText(EmojiCompat.get().process(state));
+            stateEdit.setText(EmojiCompat.get().process(state));
         } else {
-            status.setText(R.string.no_status);
+            this.stateText.setText(R.string.no_state);
         }
     }
 
     @Override
     public void showUser(User updatedUser) {
-        updatedUser.setStatus(userPresenter.getUser().getStatus());
+        updatedUser.setState(userPresenter.getUser().getState());
         userPresenter.setUser(updatedUser);
         getIntent().putExtra(USER, updatedUser);
     }
@@ -185,5 +152,38 @@ public class UserActivity extends BaseActivity implements UserPresenter.View {
     @Override
     public void onConnectionError() {
         editButton.setEnabled(false);
+    }
+
+    private void setupView() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        userView.bindTo(userPresenter.getUser(), picasso);
+        showState(userPresenter.getUser().getState());
+        if (getIntent().getBooleanExtra(EDITING_STATE, false)) {
+            showApplyState();
+        } else {
+            showEditState();
+        }
+    }
+
+    private void saveState() {
+        String state = stateEdit.getText().toString();
+        if (!TextUtils.isEmpty(state)) {
+            userPresenter.updateState(state);
+        }
+    }
+
+    private void showApplyState() {
+        editing = true;
+        editLayout.setVisibility(View.GONE);
+        saveLayout.setVisibility(View.VISIBLE);
+        stateEdit.requestFocus();
+        stateEdit.setSelection(stateEdit.getText().length());
+    }
+
+    private void showEditState() {
+        editing = false;
+        saveLayout.setVisibility(View.GONE);
+        editLayout.setVisibility(View.VISIBLE);
     }
 }

@@ -11,7 +11,7 @@ public interface TeamRepository {
 
     Observable<List<TeamMate>> get();
 
-    Observable<Void> updateStatus(String username, String newStatus);
+    Observable<Void> updateState(String username, String newState);
 
     Observable<Event> receiveUpdates();
 }

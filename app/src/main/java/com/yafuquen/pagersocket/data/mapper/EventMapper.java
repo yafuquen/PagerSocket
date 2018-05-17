@@ -35,7 +35,7 @@ public class EventMapper {
             }
             return event;
         } catch (Exception ex) {
-            return null;
+            return new Event("");
         }
     }
 

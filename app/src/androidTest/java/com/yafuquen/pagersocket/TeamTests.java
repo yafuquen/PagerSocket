@@ -80,7 +80,7 @@ public class TeamTests {
         when(rolesService.roles()).thenReturn(Observable.just(roles));
         when(teamService.team()).thenReturn(Observable.just(teamMateResponseList));
         when(teamUpdateService.receiveEvents()).thenReturn(Observable.empty());
-        when(teamUpdateService.updateStatus(anyString())).thenReturn(Observable.empty());
+        when(teamUpdateService.updateState(anyString())).thenReturn(Observable.empty());
         EmojiCompat.Config config = new BundledEmojiCompatConfig(InstrumentationRegistry.getTargetContext());
         EmojiCompat.init(config);
         activityRule.launchActivity(null);
@@ -117,18 +117,18 @@ public class TeamTests {
     }
 
     @Test
-    public void updateStatus() {
+    public void updateState() {
         onView(withId(R.id.team_list)).check(matches(isDisplayed()));
         String state;
         for (int position = 0; position < teamMateResponseList.size(); position++) {
-            state = "status" + (position + 1);
+            state = "state" + (position + 1);
             onView(withId(R.id.team_list)).perform(RecyclerViewActions.scrollToPosition(position));
             onView(withRecyclerView(R.id.team_list).atPositionOnView(position, R.id.user_card)).perform(click());
-            onView(withId(R.id.user_status_edit_action)).perform(scrollTo(), click());
-            onView(withId(R.id.user_status_edit)).check(matches(isDisplayed())).perform(scrollTo(), typeText(state));
-            onView(withId(R.id.user_status_apply_action)).perform(click());
+            onView(withId(R.id.user_state_edit_action)).perform(scrollTo(), click());
+            onView(withId(R.id.user_state_edit)).check(matches(isDisplayed())).perform(scrollTo(), typeText(state));
+            onView(withId(R.id.user_state_apply_action)).perform(click());
             onView(withId(R.id.team_list)).perform(RecyclerViewActions.scrollToPosition(position));
-            assertTextInRecyclerViewPosition(position, R.id.user_status, state);
+            assertTextInRecyclerViewPosition(position, R.id.user_state, state);
         }
     }
 

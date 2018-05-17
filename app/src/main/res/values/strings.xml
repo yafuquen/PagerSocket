@@ -2,10 +2,10 @@
     <string name="app_name">PagerSocket</string>
     <string name="languages">Languages</string>
     <string name="tags">Skills</string>
-    <string name="status">Status</string>
-    <string name="status_update">Update status</string>
-    <string name="no_status"><i>No available</i></string>
-    <string name="status_update_error">An error occurred while updating the state</string>
+    <string name="state">State</string>
+    <string name="state_update">Update state</string>
+    <string name="no_state"><i>No available</i></string>
+    <string name="state_update_error">An error occurred while updating the state</string>
     <string name="cancel">Cancel</string>
     <string name="apply">Apply</string>
     <string name="edit">Edit</string>

@@ -39,40 +39,18 @@ public class UserPresenter extends Presenter {
 
     public void setUser(User user) {
         this.user = user;
-        teamInteractor.requestUpdates(this::handleEvent);
+        teamInteractor.requestUpdates(this::handleEvent, event -> {
+            if (event instanceof StateEvent) {
+                return ((StateEvent) event).getUser().equals(user.getGithub());
+            } else if (event instanceof TeamMateEvent) {
+                return ((TeamMateEvent) event).getTeamMate().getGithub().equals(user.getGithub());
+            }
+            return false;
+        });
     }
 
-    private void handleEvent(Event event) {
-        if (event instanceof TeamMateEvent) {
-            showTeamMate(((TeamMateEvent) event).getTeamMate());
-        } else if (event instanceof StateEvent) {
-            StateEvent stateEvent = (StateEvent) event;
-            showState(stateEvent.getUser(), stateEvent.getState());
-        } else if (event instanceof NoConnectionEvent) {
-            onConnectionError();
-        }
-    }
-
-    private void onConnectionError() {
-        if (isViewReady()) {
-            view.onConnectionError();
-        }
-    }
-
-    private void showState(String username, String state) {
-        if (isViewReady() && user.getGithub().equals(username)) {
-            view.showState(state);
-        }
-    }
-
-    private void showTeamMate(TeamMate teamMate) {
-        if (isViewReady() && user.getGithub().equals(teamMate.getGithub())) {
-            view.showUser(userMapper.transform(teamMate));
-        }
-    }
-
-    public void updateStatus(String status) {
-        teamInteractor.updateStatus(user.getGithub(), status, new DisposableObserver<Void>() {
+    public void updateState(String state) {
+        teamInteractor.updateState(user.getGithub(), state, new DisposableObserver<Void>() {
             @Override
             public void onNext(Void aVoid) {
             }
@@ -80,15 +58,15 @@ public class UserPresenter extends Presenter {
             @Override
             public void onError(Throwable e) {
                 if (isViewReady()) {
-                    view.statusUpdateError();
+                    view.stateUpdateError();
                 }
             }
 
             @Override
             public void onComplete() {
-                user.setStatus(status);
+                user.setState(state);
                 if (isViewReady()) {
-                    view.statusUpdated();
+                    view.stateUpdated();
                 }
             }
         });
@@ -105,12 +83,39 @@ public class UserPresenter extends Presenter {
         teamInteractor.dispose();
     }
 
+    private void handleEvent(Event event) {
+        if (event instanceof TeamMateEvent) {
+            showTeamMate(((TeamMateEvent) event).getTeamMate());
+        } else if (event instanceof StateEvent) {
+            showState(((StateEvent) event).getState());
+        } else if (event instanceof NoConnectionEvent) {
+            onConnectionError();
+        }
+    }
+
+    private void onConnectionError() {
+        if (isViewReady()) {
+            view.onConnectionError();
+        }
+    }
+
+    private void showState(String state) {
+        if (isViewReady()) {
+            view.showState(state);
+        }
+    }
+
+    private void showTeamMate(TeamMate teamMate) {
+        if (isViewReady()) {
+            view.showUser(userMapper.transform(teamMate));
+        }
+    }
 
     public interface View extends Presenter.View {
 
-        void statusUpdateError();
+        void stateUpdateError();
 
-        void statusUpdated();
+        void stateUpdated();
 
         void showState(String state);
 

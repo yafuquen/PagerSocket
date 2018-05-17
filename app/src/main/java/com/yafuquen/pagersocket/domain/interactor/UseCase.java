@@ -19,7 +19,7 @@ abstract class UseCase<T> {
         this.observerScheduler = observerScheduler;
     }
 
-    public <E extends Observer<? super T> & Disposable> void execute(E disposableObserver) {
+    public <O extends Observer<? super T> & Disposable> void execute(O disposableObserver) {
         Observable<T> observable = execute(createObservable());
         addDisposable(observable, disposableObserver);
     }

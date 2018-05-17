@@ -58,7 +58,7 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.UserHolder> {
     public void updateState(String username, String state) {
         int position = getPosition(username);
         if (position >= 0) {
-            users.get(position).setStatus(state);
+            users.get(position).setState(state);
             notifyItemChanged(position);
         }
     }
@@ -70,7 +70,7 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.UserHolder> {
             notifyItemInserted(users.size());
         } else {
             User user = users.get(position);
-            updatedUser.setStatus(user.getStatus());
+            updatedUser.setState(user.getState());
             users.set(position, updatedUser);
             notifyItemChanged(position);
         }
@@ -99,8 +99,8 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.UserHolder> {
         @BindView(R.id.user_card)
         CardView userCard;
 
-        @BindView(R.id.user_status)
-        TextView status;
+        @BindView(R.id.user_state)
+        TextView state;
 
         private UserHolder(View itemView) {
             super(itemView);
@@ -114,14 +114,14 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.UserHolder> {
                     onUserClickListener.onClick(user);
                 }
             });
-            showStatus(user.getStatus());
+            showState(user.getState());
         }
 
-        private void showStatus(String userStatus) {
-            if (!TextUtils.isEmpty(userStatus)) {
-                status.setText(EmojiCompat.get().process(userStatus));
+        private void showState(String userState) {
+            if (!TextUtils.isEmpty(userState)) {
+                state.setText(EmojiCompat.get().process(userState));
             } else {
-                status.setText(R.string.no_status);
+                state.setText(R.string.no_state);
             }
         }
     }

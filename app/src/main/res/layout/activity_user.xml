@@ -22,7 +22,7 @@
             android:background="@color/colorDivider" />
 
         <include
-            layout="@layout/view_status_edit"
+            layout="@layout/view_state_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

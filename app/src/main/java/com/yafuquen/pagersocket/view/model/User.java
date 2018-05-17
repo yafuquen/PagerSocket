@@ -10,8 +10,7 @@ public class User implements Parcelable {
     private final String name;
 
     private final String avatar;
-
-    @SuppressWarnings("CanBeFinal")
+    
     private final String github;
 
     private final String role;
@@ -24,7 +23,7 @@ public class User implements Parcelable {
 
     private final String location;
 
-    private String status;
+    private String state;
 
     public User(String name, String avatar, String github, String role, String gender, List<String> languages,
                 List<String> tags, String location) {
@@ -36,7 +35,7 @@ public class User implements Parcelable {
         this.languages = languages;
         this.tags = tags;
         this.location = location;
-        status = "";
+        state = "";
     }
 
     private User(Parcel in) {
@@ -48,7 +47,7 @@ public class User implements Parcelable {
         languages = in.createStringArrayList();
         tags = in.createStringArrayList();
         location = in.readString();
-        status = in.readString();
+        state = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -78,7 +77,7 @@ public class User implements Parcelable {
         dest.writeStringList(languages);
         dest.writeStringList(tags);
         dest.writeString(location);
-        dest.writeString(status);
+        dest.writeString(state);
     }
 
     public String getName() {
@@ -109,12 +108,12 @@ public class User implements Parcelable {
         return tags;
     }
 
-    public String getStatus() {
-        return status;
+    public String getState() {
+        return state;
     }
 
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setState(String state) {
+        this.state = state;
     }
 }

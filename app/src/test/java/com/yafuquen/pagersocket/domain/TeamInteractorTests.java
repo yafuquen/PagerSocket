@@ -62,23 +62,23 @@ public class TeamInteractorTests {
     }
 
     @Test
-    public void updateStatus() {
+    public void updateState() {
         String username = "username";
-        String status = "newStatus";
-        when(teamRepository.updateStatus(username, status)).thenReturn(Observable.empty());
+        String state = "newState";
+        when(teamRepository.updateState(username, state)).thenReturn(Observable.empty());
         TestObserver<Void> testObserver = new TestObserver<>();
-        teamInteractor.updateStatus(username, status, testObserver);
+        teamInteractor.updateState(username, state, testObserver);
         testObserver.awaitDone(500, TimeUnit.MILLISECONDS);
         testObserver.assertComplete();
     }
 
     @Test
-    public void updateStatusError() {
+    public void updateStateError() {
         String username = "username";
         String state = "newState";
-        when(teamRepository.updateStatus(username, state)).thenReturn(Observable.error(new IllegalArgumentException()));
+        when(teamRepository.updateState(username, state)).thenReturn(Observable.error(new IllegalArgumentException()));
         TestObserver<Void> testObserver = new TestObserver<>();
-        teamInteractor.updateStatus(username, state, testObserver);
+        teamInteractor.updateState(username, state, testObserver);
         testObserver.awaitDone(500, TimeUnit.MILLISECONDS);
         testObserver.assertComplete();
     }

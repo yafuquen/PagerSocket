@@ -51,13 +51,13 @@ public class TeamUpdateServiceImpl implements TeamUpdateService {
     }
 
     @Override
-    public Observable<Void> updateStatus(String statusMessage) {
+    public Observable<Void> updateState(String stateMessage) {
         connect();
         return Observable.create(emitter -> {
             EventListener eventListener = new EventListener() {
                 @Override
                 public void onNewEvent(String event) {
-                    if (event != null && event.equals(statusMessage)) {
+                    if (event != null && event.equals(stateMessage)) {
                         emitter.onComplete();
                     }
                 }
@@ -68,7 +68,7 @@ public class TeamUpdateServiceImpl implements TeamUpdateService {
                 }
             };
             addListener(eventListener);
-            if (webSocket.send(statusMessage)) {
+            if (webSocket.send(stateMessage)) {
                 emitter.onComplete();
             } else {
                 emitter.tryOnError(new ConnectException());
@@ -96,7 +96,7 @@ public class TeamUpdateServiceImpl implements TeamUpdateService {
     }
 
     private void connect() {
-        if (webSocket == null) {
+        if (webSocket == null)
             webSocket =
                     okHttpClient.newWebSocket(new Request.Builder().url(url).build(), new WebSocketListener() {
 
@@ -112,7 +112,6 @@ public class TeamUpdateServiceImpl implements TeamUpdateService {
                             notifyError(throwable);
                         }
                     });
-        }
     }
 
     private void notifyError(Throwable throwable) {

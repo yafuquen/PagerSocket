@@ -82,14 +82,14 @@ public class TeamRepositoryTests {
     }
 
     @Test
-    public void updateStatus() {
+    public void updateState() {
         String username = "username";
-        String newStatus = "status";
-        when(teamUpdateService.updateStatus(anyString())).thenReturn(Observable.empty());
-        when(eventMapper.buildMessage(username, newStatus)).thenReturn("payload");
+        String newState = "state";
+        when(teamUpdateService.updateState(anyString())).thenReturn(Observable.empty());
+        when(eventMapper.buildMessage(username, newState)).thenReturn("payload");
         TestObserver<Void> testObserver = new TestObserver<>();
-        teamRepository.updateStatus(username, newStatus).subscribe(testObserver);
-        verify(eventMapper).buildMessage(username, newStatus);
+        teamRepository.updateState(username, newState).subscribe(testObserver);
+        verify(eventMapper).buildMessage(username, newState);
         testObserver.assertComplete();
     }
 }
