@@ -21,6 +21,7 @@
         </activity>
         <activity
             android:name=".view.ui.UserActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden"
             android:label="@string/team_mate" />
     </application>
 

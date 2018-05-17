@@ -24,6 +24,8 @@ import butterknife.ButterKnife;
 
 public class TeamActivity extends BaseActivity implements TeamPresenter.View {
 
+    private static final String USERS = "users";
+
     @Inject
     TeamPresenter teamPresenter;
 
@@ -45,7 +47,12 @@ public class TeamActivity extends BaseActivity implements TeamPresenter.View {
         ButterKnife.bind(this);
         setupView();
         teamPresenter.setView(this);
-        teamPresenter.loadList();
+        if (savedInstanceState != null && savedInstanceState.containsKey(USERS)) {
+            showList(savedInstanceState.getParcelableArrayList(USERS));
+        } else {
+            teamPresenter.loadList();
+        }
+        teamPresenter.requestUpdates();
     }
 
     @Override
@@ -79,6 +86,12 @@ public class TeamActivity extends BaseActivity implements TeamPresenter.View {
     protected void onDestroy() {
         super.onDestroy();
         teamPresenter.destroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList(USERS, adapter.getUsers());
+        super.onSaveInstanceState(outState);
     }
 
     private void setupView() {

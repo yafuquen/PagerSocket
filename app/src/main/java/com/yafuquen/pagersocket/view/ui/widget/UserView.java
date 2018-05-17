@@ -65,7 +65,8 @@ public class UserView extends RelativeLayout {
         location.setText(DisplayUtils.getCountry(user.getLocation()));
         languages.setText(DisplayUtils.getLanguages(user.getLanguages()));
         tags.setText(EmojiCompat.get().process(TextUtils.join(", ", user.getTags())));
-        picasso.load(user.getAvatar()).transform(new CircleTransform()).into(avatar);
+        picasso.load(user.getAvatar()).placeholder(R.drawable.user_avatar_placeholder)
+                .resizeDimen(R.dimen.avatar_size, R.dimen.avatar_size).transform(new CircleTransform()).into(avatar);
     }
 
 }

@@ -2,7 +2,9 @@ package com.yafuquen.pagersocket;
 
 import android.support.annotation.IdRes;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.IdlingRegistry;
 import android.support.test.espresso.contrib.RecyclerViewActions;
+import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.test.rule.ActivityTestRule;
 import android.support.text.emoji.EmojiCompat;
 import android.support.text.emoji.bundled.BundledEmojiCompatConfig;
@@ -81,9 +83,19 @@ public class TeamTests {
         when(teamService.team()).thenReturn(Observable.just(teamMateResponseList));
         when(teamUpdateService.receiveEvents()).thenReturn(Observable.empty());
         when(teamUpdateService.updateState(anyString())).thenReturn(Observable.empty());
+        CountingIdlingResource countingResource = new CountingIdlingResource("EmojiCompatInit");
+        countingResource.increment();
         EmojiCompat.Config config = new BundledEmojiCompatConfig(InstrumentationRegistry.getTargetContext());
         EmojiCompat.init(config);
+        EmojiCompat.get().registerInitCallback(new EmojiCompat.InitCallback() {
+            @Override
+            public void onInitialized() {
+                countingResource.decrement();
+            }
+        });
+        IdlingRegistry.getInstance().register(countingResource);
         activityRule.launchActivity(null);
+        IdlingRegistry.getInstance().unregister(countingResource);
     }
 
     @Test

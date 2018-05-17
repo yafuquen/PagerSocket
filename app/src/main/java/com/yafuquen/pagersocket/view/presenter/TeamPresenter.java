@@ -54,7 +54,10 @@ public class TeamPresenter extends Presenter {
                 }
             }
         });
-        requestUpdates();
+    }
+
+    public void requestUpdates() {
+        teamInteractor.requestUpdates(this::handleEvent);
     }
 
     public void setView(View view) {
@@ -70,10 +73,6 @@ public class TeamPresenter extends Presenter {
     public void destroy() {
         view = null;
         teamInteractor.dispose();
-    }
-
-    private void requestUpdates() {
-        teamInteractor.requestUpdates(this::handleEvent);
     }
 
     private void handleEvent(Event teamEvent) {

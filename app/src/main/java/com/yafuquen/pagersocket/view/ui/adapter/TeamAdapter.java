@@ -15,6 +15,7 @@ import com.yafuquen.pagersocket.R;
 import com.yafuquen.pagersocket.view.model.User;
 import com.yafuquen.pagersocket.view.ui.widget.UserView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -53,6 +54,10 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.UserHolder> {
     public void setUsers(List<User> users) {
         this.users = users;
         notifyDataSetChanged();
+    }
+
+    public ArrayList<User> getUsers() {
+        return new ArrayList<>(users);
     }
 
     public void updateState(String username, String state) {

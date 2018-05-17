@@ -108,8 +108,8 @@ public class UserActivity extends BaseActivity implements UserPresenter.View {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         outState.putBoolean(EDITING_STATE, editing);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
